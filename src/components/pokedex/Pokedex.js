@@ -9,11 +9,13 @@ class Pokedex extends Component {
     constructor(props) {
         super(props);
 
+        this.limit = 11;
+
         this.state = {
             pokemons: []
         };
 
-        this.getData()
+        this.getMainData()
             .then((data) => {
                 let pokemons = [];
 
@@ -28,16 +30,26 @@ class Pokedex extends Component {
                     });
                 });
 
-                this.setState({
-                    pokemons: pokemons
-                });
+                this.getAdvancedData()
+                    .then((data) => {
+                        console.log(data);
+                        data.forEach((pokemon, index) => {
+                            if (pokemon.evolves_from_species) {
+                                pokemons[index].evolves_from =  pokemon.evolves_from_species.name;
+                            }
+                        });
+
+                        this.setState({
+                            pokemons: pokemons
+                        });
+                    });
             })
             .catch(() => console.log('error'));
     }
 
-    getData() {
+    getMainData() {
         return new Promise((resolve, reject) => {
-            axios.get('https://pokeapi.co/api/v2/pokemon/?limit=964')
+            axios.get('https://pokeapi.co/api/v2/pokemon/?limit=' + this.limit)
                 .then(res => {
                     const pokemons = res.data.results;
                     const promises = pokemons.map(pokemon => axios.get(pokemon.url));
@@ -54,10 +66,28 @@ class Pokedex extends Component {
         })
     }
 
+    getAdvancedData() {
+        return new Promise((resolve, reject) => {
+            let promises = [];
+            for (let i = 1; i <= this.limit; i++) {
+                promises.push(axios.get('https://pokeapi.co/api/v2/pokemon-species/' + i))
+            }
+
+            Promise.all(promises)
+                .then(responses => {
+                    const dataArray = responses.map(response => response.data);
+                    resolve(dataArray);
+                })
+                .catch(() => {
+                    reject();
+                });
+        })
+    }
+
     render() {
         let pokemons = [];
         for (const [index, pokemon] of this.state.pokemons.entries()) {
-            pokemons.push(<Card key={index} data={pokemon} />)
+            pokemons.push(<Card key={index} data={pokemon}/>)
         }
 
         return (

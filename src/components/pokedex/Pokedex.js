@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Pokedex.sass';
 import Card from '../card/Card';
+import SearchBar from '../search-bar/SearchBar';
 
 class Pokedex extends Component {
     constructor(props) {
@@ -63,9 +64,6 @@ class Pokedex extends Component {
             pokemons: pokemons
         };
     }
-    /*
-
-    */
 
     render() {
         let pokemons = [];
@@ -75,7 +73,10 @@ class Pokedex extends Component {
 
         return (
             <div className="pokedex">
-                {pokemons}
+                <SearchBar/>
+                <div className="cards">
+                    {pokemons}
+                </div>
             </div>
         );
     }

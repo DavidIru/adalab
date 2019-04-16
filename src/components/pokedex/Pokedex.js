@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import axios from 'axios';
+
 import './Pokedex.sass';
 import Card from '../card/Card';
 import SearchBar from '../search-bar/SearchBar';
@@ -6,63 +8,50 @@ import SearchBar from '../search-bar/SearchBar';
 class Pokedex extends Component {
     constructor(props) {
         super(props);
-        const pokemons = [{
-            name: 'bulbasaur',
-            id: 1,
-            image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-            types: [
-                'poison',
-                'grass',
-            ],
-            evolves_from: null,
-        }, {
-            name: 'ivysaur',
-            id: 2,
-            image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png',
-            types: [
-                'poison',
-                'grass',
-            ],
-            evolves_from: 'bulbasaur',
-        }, {
-            name: 'venusaur',
-            id: 3,
-            image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png',
-            types: [
-                'poison',
-                'grass',
-            ],
-            evolves_from: 'ivysaur',
-        }, {
-            name: 'charmander',
-            id: 4,
-            image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png',
-            types: [
-                'fire',
-            ],
-            evolves_from: null,
-        }, {
-            name: 'charmeleon',
-            id: 5,
-            image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png',
-            types: [
-                'fire',
-            ],
-            evolves_from: 'charmander',
-        }, {
-            name: 'charizard',
-            id: 6,
-            image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png',
-            types: [
-                'flying',
-                'fire',
-            ],
-            evolves_from: 'charmeleon',
-        }];
 
         this.state = {
-            pokemons: pokemons
+            pokemons: []
         };
+
+        this.getData()
+            .then((data) => {
+                let pokemons = [];
+
+                data.forEach((pokemon) => {
+                    let types = pokemon.types.map((type) => type.type.name);
+                    pokemons.push({
+                        name: pokemon.name,
+                        id: pokemon.id,
+                        image: pokemon.sprites.front_default,
+                        types: types,
+                        evolves_from: null
+                    });
+                });
+
+                this.setState({
+                    pokemons: pokemons
+                });
+            })
+            .catch(() => console.log('error'));
+    }
+
+    getData() {
+        return new Promise((resolve, reject) => {
+            axios.get('https://pokeapi.co/api/v2/pokemon/?limit=964')
+                .then(res => {
+                    const pokemons = res.data.results;
+                    const promises = pokemons.map(pokemon => axios.get(pokemon.url));
+
+                    Promise.all(promises)
+                        .then(responses => {
+                            const dataArray = responses.map(response => response.data);
+                            resolve(dataArray);
+                        })
+                        .catch(() => {
+                            reject();
+                        });
+                });
+        })
     }
 
     render() {

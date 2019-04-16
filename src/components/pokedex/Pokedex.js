@@ -73,6 +73,10 @@ class Pokedex extends Component {
 
         return (
             <div className="pokedex">
+                <div className="triangleLeft"></div>
+                <div className="triangleRight"></div>
+                <div className="circleLeft"></div>
+                <div className="circleRight"></div>
                 <SearchBar/>
                 <div className="cards">
                     {pokemons}

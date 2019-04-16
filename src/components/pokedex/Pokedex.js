@@ -14,7 +14,9 @@ class Pokedex extends Component {
         this.state = {
             pokemons: []
         };
+    }
 
+    componentWillMount() {
         this.getMainData()
             .then((data) => {
                 let pokemons = [];
@@ -32,7 +34,6 @@ class Pokedex extends Component {
 
                 this.getAdvancedData()
                     .then((data) => {
-                        console.log(data);
                         data.forEach((pokemon, index) => {
                             if (pokemon.evolves_from_species) {
                                 pokemons[index].evolves_from =  pokemon.evolves_from_species.name;
@@ -98,6 +99,7 @@ class Pokedex extends Component {
                 <div className="circleRight"></div>
                 <SearchBar/>
                 <div className="cards">
+                    <p className="loading">Cargando datos...</p>
                     {pokemons}
                 </div>
             </div>

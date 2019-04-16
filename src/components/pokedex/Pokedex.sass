@@ -5,6 +5,13 @@
         display: flex
         justify-content: space-between
         flex-flow: row wrap
+        p
+            &.loading
+                display: none
+                &:only-child
+                    display: block
+                    text-align: center
+                    width: 100%
     .triangleLeft, .triangleRight, .circleLeft, .circleRight
         position: fixed
     .triangleLeft, .triangleRight

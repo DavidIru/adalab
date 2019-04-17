@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
 import './Card.sass';
-import noImage from './noimage.png';
+import noImage from '../../assets/noimage.png';
 
 class Card extends Component {
     render() {

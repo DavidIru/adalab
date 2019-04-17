@@ -7,7 +7,6 @@ import Card from '../card/Card';
 import BigCard from '../big-card/BigCard';
 import SearchBar from '../search-bar/SearchBar';
 
-
 class Pokedex extends Component {
     constructor(props) {
         super(props);

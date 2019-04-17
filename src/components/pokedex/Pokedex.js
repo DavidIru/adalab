@@ -11,7 +11,7 @@ class Pokedex extends Component {
     constructor(props) {
         super(props);
 
-        this.limit = 11;
+        this.numberOfPokemons = 807;
 
         this.state = {
             pokemons: [],
@@ -55,7 +55,7 @@ class Pokedex extends Component {
 
     getMainData() {
         return new Promise((resolve, reject) => {
-            axios.get('https://pokeapi.co/api/v2/pokemon/?limit=' + this.limit)
+            axios.get('https://pokeapi.co/api/v2/pokemon/?limit=' + this.numberOfPokemons)
                 .then(res => {
                     const pokemons = res.data.results;
                     const promises = pokemons.map(pokemon => axios.get(pokemon.url));
@@ -75,7 +75,7 @@ class Pokedex extends Component {
     getAdvancedData() {
         return new Promise((resolve, reject) => {
             let promises = [];
-            for (let i = 1; i <= this.limit; i++) {
+            for (let i = 1; i <= this.numberOfPokemons; i++) {
                 promises.push(axios.get('https://pokeapi.co/api/v2/pokemon-species/' + i))
             }
 

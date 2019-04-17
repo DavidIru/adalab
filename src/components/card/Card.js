@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 import './Card.sass';
 import noImage from './noimage.png';
@@ -15,7 +15,7 @@ class Card extends Component {
             <Link to={'/' + this.props.data.name}>
                 <div className="card">
                     <div>
-                        <img src={this.props.data.image || noImage} alt={this.props.data.name} />
+                        <img src={this.props.data.image || noImage} alt={this.props.data.name}/>
                         <p>ID / {this.props.data.id}</p>
                     </div>
                     <div>
@@ -25,11 +25,11 @@ class Card extends Component {
                         </div>
                         {
                             this.props.data.evolves_from
-                            ? <div className="evolves-from">
-                                <p>Evoluciona de:</p>
-                                <p>{this.props.data.evolves_from}</p>
+                                ? <div className="evolves-from">
+                                    <p>Evoluciona de:</p>
+                                    <p>{this.props.data.evolves_from}</p>
                                 </div>
-                            : null
+                                : null
                         }
                     </div>
                 </div>

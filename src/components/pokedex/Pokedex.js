@@ -118,7 +118,6 @@ class Pokedex extends Component {
                         : <p className="loading">Cargando datos...</p>
                     }
                     <Router>
-                        {pokemons}
                         <Route
                             path="/:name"
                             render={(props) => {
@@ -130,6 +129,7 @@ class Pokedex extends Component {
                                 )}
                             }
                         />
+                        {pokemons}
                     </Router>
                 </div>
             </div>

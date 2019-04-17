@@ -12,7 +12,9 @@ class Pokedex extends Component {
         this.limit = 11;
 
         this.state = {
-            pokemons: []
+            pokemons: [],
+            filtered: [],
+            filter: ''
         };
     }
 
@@ -41,7 +43,8 @@ class Pokedex extends Component {
                         });
 
                         this.setState({
-                            pokemons: pokemons
+                            pokemons: pokemons,
+                            filtered: pokemons
                         });
                     });
             })
@@ -85,9 +88,16 @@ class Pokedex extends Component {
         })
     }
 
+    handleKeyUp(event) {
+        this.setState({
+            filter: event.target.value,
+            filtered: this.state.pokemons.filter(pokemon => pokemon.name.search(event.target.value) !== -1)
+        });
+    }
+
     render() {
         let pokemons = [];
-        for (const [index, pokemon] of this.state.pokemons.entries()) {
+        for (const [index, pokemon] of this.state.filtered.entries()) {
             pokemons.push(<Card key={index} data={pokemon}/>)
         }
 
@@ -97,9 +107,12 @@ class Pokedex extends Component {
                 <div className="triangleRight"></div>
                 <div className="circleLeft"></div>
                 <div className="circleRight"></div>
-                <SearchBar/>
+                <SearchBar onKeyUp={(event) => this.handleKeyUp(event)}/>
                 <div className="cards">
-                    <p className="loading">Cargando datos...</p>
+                    { this.state.filter
+                        ? <p className="loading">No hay coincidencias para la búsqueda: <strong>{this.state.filter}</strong></p>
+                        : <p className="loading">Cargando datos...</p>
+                    }
                     {pokemons}
                 </div>
             </div>

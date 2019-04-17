@@ -4,7 +4,7 @@ import './SearchBar.sass';
 class SearchBar extends Component {
     render() {
         return (
-            <input type="text" placeholder="Filtra pokemons por nombre..."/>
+            <input type="text" placeholder="Filtra pokemons por nombre..." onKeyUp={this.props.onKeyUp}/>
         );
     }
 }

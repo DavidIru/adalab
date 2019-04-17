@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import './Pokedex.sass';
 import Card from '../card/Card';
+import BigCard from '../big-card/BigCard';
 import SearchBar from '../search-bar/SearchBar';
+
 
 class Pokedex extends Component {
     constructor(props) {
@@ -113,7 +116,13 @@ class Pokedex extends Component {
                         ? <p className="loading">No hay coincidencias para la búsqueda: <strong>{this.state.filter}</strong></p>
                         : <p className="loading">Cargando datos...</p>
                     }
-                    {pokemons}
+                    <Router>
+                        {pokemons}
+                        <Route
+                            path="/:name"
+                            render={(props) => <BigCard pokemons={this.state.pokemons} name={props.match.params.name} />}
+                        />
+                    </Router>
                 </div>
             </div>
         );

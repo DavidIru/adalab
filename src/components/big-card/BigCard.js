@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from "react-router-dom";
+import {Link} from 'react-router-dom';
 
 import './BigCard.sass';
 import noImage from './noimage.png';

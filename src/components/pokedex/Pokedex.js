@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {BrowserRouter as Router, Route} from "react-router-dom";
 
 import './Pokedex.sass';
 import Card from '../card/Card';
@@ -41,7 +41,7 @@ class Pokedex extends Component {
                     .then((data) => {
                         data.forEach((pokemon, index) => {
                             if (pokemon.evolves_from_species) {
-                                pokemons[index].evolves_from =  pokemon.evolves_from_species.name;
+                                pokemons[index].evolves_from = pokemon.evolves_from_species.name;
                             }
                         });
 
@@ -112,15 +112,23 @@ class Pokedex extends Component {
                 <div className="circleRight"></div>
                 <SearchBar onKeyUp={(event) => this.handleKeyUp(event)}/>
                 <div className="cards">
-                    { this.state.filter
-                        ? <p className="loading">No hay coincidencias para la búsqueda: <strong>{this.state.filter}</strong></p>
+                    {this.state.filter
+                        ? <p className="loading">No hay coincidencias para la
+                            búsqueda: <strong>{this.state.filter}</strong></p>
                         : <p className="loading">Cargando datos...</p>
                     }
                     <Router>
                         {pokemons}
                         <Route
                             path="/:name"
-                            render={(props) => <BigCard pokemons={this.state.pokemons} name={props.match.params.name} />}
+                            render={(props) => {
+                                return (
+                                    <BigCard
+                                        name={props.match.params.name}
+                                        loaded={this.state.pokemons.length > 0}
+                                        pokemon={(this.state.pokemons.filter(pokemon => pokemon.name.search(props.match.params.name) !== -1)).pop()}/>
+                                )}
+                            }
                         />
                     </Router>
                 </div>

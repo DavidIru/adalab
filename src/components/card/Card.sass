@@ -1,0 +1,59 @@
+.card
+    width: 250px
+    background-color: #fff
+    margin-bottom: 20px
+    border: 1px solid #cac9c9
+    box-shadow: 0 0 2px 1px #ead305
+    z-index: 1
+    div
+        &:first-child
+            text-align: center
+            background-color: #dfdfdf
+            position: relative
+            display: flex
+            justify-content: center
+            align-items: center
+            height: 130px
+            img
+                max-width: 100px
+            p
+                position: absolute
+                margin: 0
+                padding: 4px 8px
+                bottom: 0
+                left: 0
+                background-color: #d3cdca
+                color: #967040
+                font-size: 10px
+                font-weight: bold
+        &:last-child
+            padding: 20px 14px
+            height: 90px
+            p
+                margin: 0
+                font-size: 18px
+                text-transform: capitalize
+            .types
+                margin: 4px 0
+                padding: 0
+                span
+                    border: 1px solid #DED9D3
+                    border-radius: 4px
+                    margin: 0 4px 0 0
+                    padding: 2px
+                    text-transform: uppercase
+                    color: #a29385
+                    font-size: 9px
+            .evolves-from
+                margin: 10px 0
+                padding: 0 0 0 6px
+                height: auto
+                border-left: 3px solid #592f1f
+                p
+                    text-transform: none
+                    &:first-child
+                        font-size: 11px
+                        color: #a18782
+                    &:last-child
+                        color: #696462
+                        font-weight: 100

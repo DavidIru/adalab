@@ -1,0 +1,51 @@
+.pokedex
+    max-width: 900px
+    margin: 0 auto
+    .cards
+        display: flex
+        justify-content: space-between
+        flex-flow: row wrap
+        z-index: 1
+        a
+            text-decoration: none
+            color: inherit
+        p
+            &.loading
+                display: none
+                &:only-child
+                    display: block
+                    text-align: center
+                    width: 100%
+    .triangleLeft, .triangleRight, .circleLeft, .circleRight
+        position: fixed
+    .triangleLeft, .triangleRight
+        width: 0
+        height: 0
+        border-top: 50px solid #000
+        top: 0
+    .triangleLeft
+        border-right: 50px solid transparent
+        left: 0
+    .triangleRight
+        border-left: 50px solid transparent
+        right: 0
+    .circleLeft, .circleRight
+        background-color: #f60024
+        bottom: -70px
+        width: 140px
+        height: 140px
+        border-radius: 50%
+    .circleLeft
+        left: -70px
+    .circleRight
+        right: -70px
+
+@media only screen and (max-width: 1060px)
+    .pokedex
+        max-width: 600px
+        .cards
+            justify-content: space-around
+
+@media only screen and (max-width: 775px)
+    .pokedex
+        max-width: 300px
